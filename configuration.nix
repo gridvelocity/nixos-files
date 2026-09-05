@@ -92,35 +92,34 @@ powerManagement.powertop.enable = true;
    programs.firefox.enable = true;
    nixpkgs.config.allowUnfree=true;
   # List packages installed in system profile.
- #  You can use https://search.nixos.org/ to find more packages (and options).
+ #  You can use https://search.nixos.org/ to find more packages (and the NixOS manual).
  environment.systemPackages = with pkgs; [
    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
- fastfetch
-discord
-gnome-builder
-nautilus
-kitty
-waybar
-hyprpaper
-git
-rofi
-brightnessctl
-dunst
-grim
-slurp
-wl-clipboard
-bash-completion
-jetbrains.webstorm
-jetbrains.pycharm
-  bluez
-  python3
-  cmatrix
-  brave
+   fastfetch
+   discord
+   gnome-builder
+   nautilus
+   kitty
+   waybar
+   hyprpaper
+   git
+   rofi
+   brightnessctl
+   dunst
+   grim
+   slurp
+   wl-clipboard
+   bash-completion
+   jetbrains.webstorm
+   jetbrains.pycharm
+   bluez
+   python3Packages.python
+   cmatrix
+   brave
  ];
 nix.settings.experimental-features = ["nix-command" "flakes" ];
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
+  # Some programs need SUID wrappers, can be configured further.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
@@ -158,8 +157,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
   # and migrated your data accordingly.
   #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+  # For more information, see `man configuration.nix` or `nixos-help`.
   system.stateVersion = "26.05"; # Did you read the comment?
 
 }
-
