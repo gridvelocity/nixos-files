@@ -28,11 +28,11 @@ in
     enable = true;
 
     enabledExtensions = with spicePkgs.extensions; [
-      adblockify
+      beautifulLyrics
       shuffle
+      adblock
     ];
 
-    theme = spicePkgs.themes.catppuccin;
-    colorScheme = "mocha";
+    theme = spicePkgs.themes.starryNight;
   };
 }
