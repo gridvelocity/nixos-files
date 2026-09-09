@@ -1,0 +1,113 @@
+//-*- mode: jsonc -*-
+{
+    "layer": "top", 
+    "position": "top", 
+    "height": 30, 
+    "spacing": 4, 
+
+    // Choose the order of the modules
+    "modules-left": [
+        "ext/workspaces",
+        "custom/sep",
+        "ext/window",
+        "custom/sep"
+    ],
+    "modules-center": [
+    ],
+
+    "modules-right": [
+        "custom/sep",
+        "pulseaudio",
+        "custom/sep",
+        "network",
+        "custom/sep",
+        "cpu",
+        "custom/sep",
+        "memory",
+        "custom/sep",
+        "battery",
+        "custom/sep",
+        "backlight",
+        "custom/sep",
+        "clock",
+        "custom/sep",
+        "tray"
+    ],
+
+    // Modules configuration
+    "ext/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "warp-on-scroll": false,
+        "format": "{name}",
+        "persistent-workspaces": {
+            "*" : 9
+        }
+    },
+    "ext/window" : {
+        "max-length": 40,
+        "seperate-outputs": false
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+        // "icons": {
+        //   "blueman": "bluetooth",
+        //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
+        // }
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": "󰝟 {icon} {format_source}",
+        "format-muted": "󰝟 {format_source}",
+        "format-source": "   {volume}%    ",
+        "format-source-muted": "           ",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "󰂑",
+            "headset": "󰂑",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+    "clock": {
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "CPU: {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "Mem: {used}GiB"
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "light:{percent}%",
+        "min-brightness": 1,
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "Bat: {capacity}%({time} left)",
+        "format-plugged": "{capacity}%",
+        "format-alt": "Bat: {capacity}%",
+        "format-time": "{H}:{M}",
+    },
+    "network": {
+        "format": "Online",
+        "format-disconnected": "Disconnected ⚠"
+    },
+    "custom/sep": {
+        "format" : "|",
+        "interval" : 0
+    },
+}
+}
+
