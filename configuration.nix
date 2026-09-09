@@ -61,13 +61,21 @@ programs.hyprland = {
 	enable = true;
 	xwayland.enable = true;
 };
-boot.loader.grub.theme = pkgs.stdenv.mkDerivation {
-  pname = "my-grub-theme";
-  version = "1.0";
-src = ./kasane-teto;
+  boot.loader.grub = {
+    enable = true;
+    # ... your existing grub settings (device, efiSupport, etc.) ...
 
-  installPhase = "cp -r customize/nixos $out";
-};
+    # Force GRUB to use a high-resolution display mode
+    gfxmodeEfi = "1920x1080";
+    gfxmodeBios = "1920x1080";
+
+    theme = pkgs.stdenv.mkDerivation {
+      pname = "local-grub-theme";
+      version = "1.0";
+      src = ./kasane-teto;
+      installPhase = "cp -r * $out";
+    };
+  };
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -107,6 +115,7 @@ powerManagement.powertop.enable = true;
    fastfetch
    vencord
    gnome-builder
+   discord
    nautilus
    kitty
    waybar
