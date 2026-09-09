@@ -63,9 +63,10 @@ programs.hyprland = {
 };
   boot.loader.grub = {
     enable = true;
-    # ... your existing grub settings (device, efiSupport, etc.) ...
+    efiSupport = true;
+    devices = [ "nodev" ]; # Fixes the "You must set the option..." error
 
-    # Force GRUB to use a high-resolution display mode
+    # Keep these to force your graphics engine to display the theme
     gfxmodeEfi = "1920x1080";
     gfxmodeBios = "1920x1080";
 
