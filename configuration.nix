@@ -70,11 +70,15 @@ programs.hyprland = {
     gfxmodeEfi = "1920x1080";
     gfxmodeBios = "1920x1080";
 
-    theme = pkgs.stdenv.mkDerivation {
+        theme = pkgs.stdenv.mkDerivation {
       pname = "local-grub-theme";
       version = "1.0";
       src = ./kasane-teto;
-      installPhase = "cp -r * $out";
+      # Create the $out directory before copying files into it
+      installPhase = ''
+        mkdir -p $out
+        cp -r * $out/
+      '';
     };
   };
 
