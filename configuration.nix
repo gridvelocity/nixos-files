@@ -14,7 +14,7 @@
     nerd-fonts.jetbrains-mono
   ];
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
@@ -61,6 +61,27 @@ programs.hyprland = {
 	enable = true;
 	xwayland.enable = true;
 };
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    devices = [ "nodev" ]; # Fixes the "You must set the option..." error
+
+    # Keep these to force your graphics engine to display the theme
+    gfxmodeEfi = "1920x1080";
+    gfxmodeBios = "1920x1080";
+
+        theme = pkgs.stdenv.mkDerivation {
+      pname = "local-grub-theme";
+      version = "1.0";
+      src = ./kasane-teto;
+      # Create the $out directory before copying files into it
+      installPhase = ''
+        mkdir -p $out
+        cp -r * $out/
+      '';
+    };
+  };
+
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
@@ -88,7 +109,7 @@ programs.hyprland = {
    ];
  };
 powerManagement.powertop.enable = true;
-
+services.flatpak.enable = true;
    programs.firefox.enable = true;
    nixpkgs.config.allowUnfree=true;
   # List packages installed in system profile.
@@ -97,8 +118,9 @@ powerManagement.powertop.enable = true;
    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
    fastfetch
-   discord
+   vencord
    gnome-builder
+   discord
    nautilus
    kitty
    waybar
@@ -116,6 +138,7 @@ powerManagement.powertop.enable = true;
    bluez
    python3Packages.python
    cmatrix
+   obs-studio
    brave
  ];
 nix.settings.experimental-features = ["nix-command" "flakes" ];
@@ -127,7 +150,9 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   # };
 
   # List services that you want to enable:
-
+services.blueman.enable = true;
+system.autoUpgrade.enable = true;
+system.autoUpgrade.allowReboot = true;
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   # Open ports in the firewall.

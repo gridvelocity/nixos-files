@@ -2,7 +2,7 @@
   description = "Hyprland on Nixos";
 
   inputs = {
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix/24.11";
+spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
     nixpkgs.url = "nixpkgs/nixos-unstable";
 

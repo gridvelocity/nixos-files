@@ -32,7 +32,10 @@ in
       shuffle
       adblock
     ];
-
+ enabledCustomApps = with spicePkgs.apps; [
+      marketplace
+      lyricsPlus
+    ];
     theme = spicePkgs.themes.starryNight;
   };
 }
