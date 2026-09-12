@@ -64,9 +64,8 @@ programs.hyprland = {
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
-    devices = [ "nodev" ]; # Fixes the "You must set the option..." error
+    devices = [ "nodev" ];
 
-    # Keep these to force your graphics engine to display the theme
     gfxmodeEfi = "1920x1080";
     gfxmodeBios = "1920x1080";
 
@@ -74,7 +73,6 @@ programs.hyprland = {
       pname = "local-grub-theme";
       version = "1.0";
       src = ./kasane-teto;
-      # Create the $out directory before copying files into it
       installPhase = ''
         mkdir -p $out
         cp -r * $out/
