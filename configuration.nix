@@ -82,7 +82,12 @@ programs.hyprland = {
       '';
     };
   };
+services.fprintd = {
+  enable = true;
 
+  tod.enable = true;
+  tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+};
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
