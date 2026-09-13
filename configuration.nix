@@ -82,12 +82,7 @@ programs.hyprland = {
       '';
     };
   };
-services.fprintd = {
-  enable = true;
 
-  tod.enable = true;
-  tod.driver = pkgs.libfprint-2-tod1-vfs0090;
-};
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
@@ -121,8 +116,14 @@ services.flatpak.enable = true;
   # List packages installed in system profile.
  #  You can use https://search.nixos.org/ to find more packages (and the NixOS manual).
  services.gvfs.enable = true;
- services.fprintd.enable = true;
- security.pam.services.sudo.fprintAuth = true;
+services.fprintd = {
+  enable = true;
+
+  tod.enable = true;
+  tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+};
+
+security.pam.services.sudo.fprintAuth = true;
  environment.systemPackages = with pkgs; [
    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
