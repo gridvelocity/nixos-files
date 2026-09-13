@@ -18,7 +18,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
- # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
    networking.hostName = "larptop"; # Define your hostname.
 
@@ -57,6 +57,7 @@ services.greetd = {
     };
   };
 };
+security.pam.services.hyprlock = {};
 programs.hyprland = {
 	enable = true;
 	xwayland.enable = true;
@@ -141,6 +142,7 @@ services.flatpak.enable = true;
    obs-studio
    gnome-disk-utility
    vlc
+   hyprlock
    brave
  ];
 nix.settings.experimental-features = ["nix-command" "flakes" ];
