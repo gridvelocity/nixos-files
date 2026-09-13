@@ -115,6 +115,7 @@ services.flatpak.enable = true;
    nixpkgs.config.allowUnfree=true;
   # List packages installed in system profile.
  #  You can use https://search.nixos.org/ to find more packages (and the NixOS manual).
+ services.gvfs.enable = true;
  environment.systemPackages = with pkgs; [
    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
@@ -122,7 +123,9 @@ services.flatpak.enable = true;
    vencord
    gnome-builder
    discord
-   nautilus
+   thunar
+   gvfs
+   glib
    kitty
    waybar
    hyprpaper
@@ -139,6 +142,7 @@ services.flatpak.enable = true;
    bluez
    python3Packages.python
    cmatrix
+   fprintd
    obs-studio
    gnome-disk-utility
    vlc

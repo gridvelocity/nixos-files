@@ -21,6 +21,7 @@ local fileManager = "nautilus"
 local menu = "rofi -show drun"
 local reload_waybar = "pkill waybar; waybar &"
 local snip = 'grim -g "$(slurp)" - | wl-copy'
+local lock = "hyprlock -c ~/.config/hypr/hyprlock.conf"
 
 --################
 --## AUTOSTART ###
@@ -106,7 +107,7 @@ hl.bind(mainMod .. " + M", hl.dsp.exit())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(reload_waybar))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock")
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lock))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(snip))
 
