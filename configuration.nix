@@ -128,6 +128,7 @@ services.flatpak.enable = true;
    thunar
    gvfs
    glib
+   usbutils
    kitty
    waybar
    hyprpaper
