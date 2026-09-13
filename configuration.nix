@@ -143,6 +143,7 @@ services.flatpak.enable = true;
    gnome-disk-utility
    vlc
    hyprlock
+   udiskie
    brave
  ];
 nix.settings.experimental-features = ["nix-command" "flakes" ];
@@ -153,11 +154,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   #   enableSSHSupport = true;
   # };
 services.udisks2.enable = true;
-services.udiskie = {
-  enable = true;
-  automount = true;
-  notify = true; # Shows a desktop notification when a device is plugged in
-};
+
 
   # List services that you want to enable:
 services.blueman.enable = true;
