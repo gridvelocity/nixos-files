@@ -116,6 +116,8 @@ services.flatpak.enable = true;
   # List packages installed in system profile.
  #  You can use https://search.nixos.org/ to find more packages (and the NixOS manual).
  services.gvfs.enable = true;
+ services.fprintd.enable = true;
+ security.pam.services.sudo.fprintAuth = true;
  environment.systemPackages = with pkgs; [
    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
