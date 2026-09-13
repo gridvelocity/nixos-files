@@ -109,7 +109,7 @@ programs.hyprland = {
    ];
  };
 powerManagement.powertop.enable = true;
-
+services.flatpak.enable = true;
    programs.firefox.enable = true;
    nixpkgs.config.allowUnfree=true;
   # List packages installed in system profile.
@@ -138,7 +138,8 @@ powerManagement.powertop.enable = true;
    bluez
    python3Packages.python
    cmatrix
-   vlc
+   obs-studio
+   gnome-disk-utility
    brave
  ];
 nix.settings.experimental-features = ["nix-command" "flakes" ];
@@ -150,7 +151,9 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   # };
 
   # List services that you want to enable:
-
+services.blueman.enable = true;
+system.autoUpgrade.enable = true;
+system.autoUpgrade.allowReboot = true;
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   # Open ports in the firewall.
