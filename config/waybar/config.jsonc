@@ -15,24 +15,26 @@
     "modules-center": [
     ],
 
-    "modules-right": [
-        "custom/sep",
-        "pulseaudio",
-        "custom/sep",
-        "network",
-        "custom/sep",
-        "cpu",
-        "custom/sep",
-        "memory",
-        "custom/sep",
-        "battery",
-        "custom/sep",
-        "backlight",
-        "custom/sep",
-        "clock",
-        "custom/sep",
-        "tray"
-    ],
+"modules-right": [
+    "pulseaudio",
+    "custom/bt-battery",
+    "custom/sep",
+    "pulseaudio#microphone",
+    "custom/sep",
+    "network",
+    "custom/sep",
+    "cpu",
+    "custom/sep",
+    "memory",
+    "custom/sep",
+    "battery",
+    "custom/sep",
+    "backlight",
+    "custom/sep",
+    "clock",
+    "custom/sep",
+    "tray"
+],
 
     // Modules configuration
     "ext/workspaces": {
@@ -56,24 +58,28 @@
         //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
         // }
     },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": "󰝟 {icon} {format_source}",
-        "format-muted": "󰝟 {format_source}",
-        "format-source": "   {volume}%    ",
-        "format-source-muted": "           ",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "󰂑",
-            "headset": "󰂑",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        }
-    },
+"pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-bluetooth": "{volume}% {icon}",
+    "format-bluetooth-muted": "󰝟",
+    "format-muted": "󰝟",
+    "format-icons": {
+        "default": ["", "", ""]
+    }
+},
+
+"pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": " ",
+    "tooltip": false
+},
+"custom/bt-battery": {
+    "exec": "bluetoothctl info 41:42:CD:D9:1B:AC | awk '/Battery Percentage:/ {gsub(/[()]/, \"\", $4); b=$4; if (b <= 20) i=\"󱊡\"; else if (b <= 60) i=\"󱊢\"; else i=\"󱊣\"; print \"(\" b \"% \" i \")\"}'",
+    "interval": 30,
+    "format": "{}",
+    "tooltip": false
+},
     "clock": {
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -87,7 +93,7 @@
     "backlight": {
         // "device": "acpi_video1",
         "format": "light:{percent}%",
-        "min-brightness": 1,
+        "min-brightness": 0,
     },
     "battery": {
         "states": {
@@ -102,12 +108,11 @@
     },
     "network": {
         "format": "Online",
-        "format-disconnected": "Disconnected ⚠"
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{essid}"
     },
     "custom/sep": {
         "format" : "|",
         "interval" : 0
-    },
+    }
 }
-}
-

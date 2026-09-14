@@ -17,7 +17,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal = "kitty"
-local fileManager = "nautilus"
+local fileManager = "thunar"
 local menu = "rofi -show drun"
 local reload_waybar = "pkill waybar; waybar &"
 local snip = 'grim -g "$(slurp)" - | wl-copy'
@@ -90,7 +90,7 @@ hl.animation({
 hl.animation({
     leaf = "workspaces",
     enabled = true,
-    speed = 6,
+    speed = 3,
     bezier = "default",
 })
 

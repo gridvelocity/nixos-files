@@ -143,6 +143,7 @@ security.pam.services.sudo.fprintAuth = true;
    brightnessctl
    dunst
    grim
+   powertop
    slurp
    wl-clipboard
    bash-completion
