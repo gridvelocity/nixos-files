@@ -149,7 +149,7 @@ hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURC
 -- Brightness controls
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"))
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"))
-
+hl.bind("XF86PowerOff", hl.dsp.exec_cmd("hyprlock"))
 hl.window_rule({
     match = {
         class = ".*",
