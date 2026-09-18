@@ -149,6 +149,12 @@ security.pam.services.sudo.fprintAuth = true;
    slurp
    wl-clipboard
    bash-completion
+   protonmail-desktop
+   bitwarden-desktop
+   unzip
+   xarchiver
+   zip
+   thunar-archive-plugin
    jetbrains.webstorm
    jetbrains.pycharm
    bluez
