@@ -144,6 +144,8 @@ security.pam.services.sudo.fprintAuth = true;
    dunst
    grim
    powertop
+   weathr
+   peaclock
    slurp
    wl-clipboard
    bash-completion
@@ -157,6 +159,7 @@ security.pam.services.sudo.fprintAuth = true;
    gnome-disk-utility
    vlc
    hyprlock
+   ani-cli
    udiskie
    brave
  ];
