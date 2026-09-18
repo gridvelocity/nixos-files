@@ -33,7 +33,7 @@
   pulse.enable = true;
 };
 
-services.mpris-proxy.enable = true;
+
   # Set your time zone.
    time.timeZone = "America/New_York";
 
@@ -172,6 +172,7 @@ security.pam.services.sudo.fprintAuth = true;
    vlc
    hyprlock
    ani-cli
+   playerctl
    udiskie
    brave
  ];
