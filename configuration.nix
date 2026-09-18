@@ -28,6 +28,12 @@
   	enable=true;
   	powerOnBoot = true;
   };
+  services.pipewire = {
+  enable = true;
+  pulse.enable = true;
+};
+
+services.mpris-proxy.enable = true;
   # Set your time zone.
    time.timeZone = "America/New_York";
 
