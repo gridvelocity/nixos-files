@@ -155,8 +155,6 @@ security.pam.services.sudo.fprintAuth = true;
    slurp
    wl-clipboard
    bash-completion
-   protonmail-desktop
-   bitwarden-desktop
    unzip
    xarchiver
    zip
@@ -174,6 +172,7 @@ security.pam.services.sudo.fprintAuth = true;
    ani-cli
    playerctl
    udiskie
+   pavucontrol
    brave
  ];
 nix.settings.experimental-features = ["nix-command" "flakes" ];
