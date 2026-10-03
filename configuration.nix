@@ -186,8 +186,19 @@ services.udisks2.enable = true;
 
   # List services that you want to enable:
 services.blueman.enable = true;
-system.autoUpgrade.enable = true;
-system.autoUpgrade.allowReboot = true;
+system.autoUpgrade = {
+  enable = true;
+  dates = "weekly";
+  allowReboot = false;
+};
+nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 30d";
+};
+
+nix.optimise.automatic = true;
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   # Open ports in the firewall.
