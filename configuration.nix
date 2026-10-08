@@ -116,10 +116,16 @@ services.greetd = {
 
   settings = {
     default_session = {
-      command = "start-hyprland";
+      command = "uwsm start hyprland-uwsm.desktop";
       user = "collguy";
     };
   };
+};
+
+programs.hyprland = {
+  enable = true;
+  withUWSM = true;
+  xwayland.enable = true;
 };
 security.pam.services.hyprlock = {};
 programs.hyprland = {
