@@ -1,0 +1,310 @@
+
+# Edit this configuration file to define what should be installed on
+# your system. Help is available in the configuration.nix(5) man page, on
+# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+
+
+#im testing a bash alias that makes git easier
+
+{ config, lib, pkgs, ... }:
+
+{
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Use latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+   networking.hostName = "larptop"; # Define your hostname.
+
+  # Configure network connections interactively with nmcli or nmtui.
+  networking.networkmanager.enable = true;
+  hardware.bluetooth = {
+  	enable=true;
+  	powerOnBoot = true;
+  };
+  services.pipewire = {
+  enable = true;
+  pulse.enable = true;
+};
+programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    glibc
+    glib
+    zlib
+    nasm
+    util-linux
+    libGL
+    libGLU
+    vulkan-loader
+    libX11
+    libXext
+    libXrender
+    libXrandr
+    libXcursor
+    libXi
+    libXtst
+    libXinerama
+    libXxf86vm
+    libxcb
+    libxkbcommon
+    wayland
+    alsa-lib
+    libpulseaudio
+    pipewire
+    openal
+    flac
+    libvorbis
+    libogg
+    libopus
+    fontconfig
+    freetype
+    libjpeg
+    libpng
+    gdk-pixbuf
+    cairo
+    pango
+    gtk3
+    gtk4
+    nss
+    nspr
+    atk
+    at-spi2-atk
+    at-spi2-core
+    dbus
+    cups
+    expat
+    libdrm
+    mesa
+    systemd
+    openssl
+    curl
+    libssh2
+    gamemode
+  ];
+
+
+
+  # Set your time zone.
+   time.timeZone = "America/New_York";
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Select internationalisation properties.
+  # i18n.defaultLocale = "en_US.UTF-8";
+  # console = {
+  #   font = "Lat2-Terminus16";
+  #   keyMap = "us";
+  #   useXkbConfig = true; # use xkb.options in tty.
+  # };
+
+  # Enable the X11 windowing system.
+  # services.xserver.enable=true;
+  # services.xserver.windowManager.qtile.enable=true;
+  # services.xserver.displayManager.lightdm.enable=true;
+services.greetd = {
+  enable = true;
+
+  settings = {
+    default_session = {
+      command = "start-hyprland";
+      user = "collguy";
+    };
+  };
+};
+security.pam.services.hyprlock = {};
+programs.hyprland = {
+	enable = true;
+	xwayland.enable = true;
+};
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    devices = [ "nodev" ]; # Fixes the "You must set the option..." error
+
+    # Keep these to force your graphics engine to display the theme
+    gfxmodeEfi = "1920x1080";
+    gfxmodeBios = "1920x1080";
+
+        theme = pkgs.stdenv.mkDerivation {
+      pname = "local-grub-theme";
+      version = "1.0";
+      src = ./kasane-teto;
+      # Create the $out directory before copying files into it
+      installPhase = ''
+        mkdir -p $out
+        cp -r * $out/
+      '';
+    };
+  };
+
+  # Configure keymap in X11
+  # services.xserver.xkb.layout = "us";
+  # services.xserver.xkb.options = "eurosign:e,caps:escape";
+
+#   Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound.
+  # services.pulseaudio.enable = true;
+  # OR
+  # services.pipewire = {
+  #   enable = true;
+  #   pulse.enable = true;
+  # };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+ users.users.collguy = {
+   isNormalUser = true;
+   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+   packages = with pkgs; [
+     tree
+   ];
+ };
+powerManagement.powertop.enable = true;
+services.flatpak.enable = true;
+   programs.firefox.enable = true;
+   nixpkgs.config.allowUnfree=true;
+  # List packages installed in system profile.
+ #  You can use https://search.nixos.org/ to find more packages (and the NixOS manual).
+ services.gvfs.enable = true;
+services.fprintd = {
+  enable = true;
+
+  tod.enable = true;
+  tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+};
+
+security.pam.services.sudo.fprintAuth = true;
+environment.sessionVariables = {
+  XDG_DATA_DIRS = [ "$HOME/.local/share:$XDG_DATA_DIRS" ];
+};
+
+ environment.systemPackages = with pkgs; [
+   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+   wget
+   fastfetch
+   gnome-builder
+   discord
+   thunar
+   gvfs
+   glib
+   usbutils
+    bottles
+    flatpak
+   kitty
+   waybar
+   hyprpaper
+   git
+   rofi
+   brightnessctl
+   dunst
+   grim
+   powertop
+   weathr
+   peaclock
+   slurp
+   wl-clipboard
+   bash-completion
+   unzip
+   xarchiver
+   zip
+   thunar-archive-plugin
+   jetbrains.webstorm
+   jetbrains.pycharm
+   bluez
+   python3Packages.python
+   cmatrix
+   fprintd
+   obs-studio
+   gnome-disk-utility
+   vlc
+   hyprlock
+   ani-cli
+   playerctl
+   udiskie
+   xc
+   lxappearance
+   home-manager
+   pavucontrol
+   brave
+    (runCommand "local-custom-themes" {} ''
+     mkdir -p $out/share/icons
+     cp -r ${./extras}/* $out/share/icons/
+   '')
+ ];
+nix.settings.experimental-features = ["nix-command" "flakes" ];
+  # Some programs need SUID wrappers, can be configured further.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+services.udisks2.enable = true;
+xdg.portal = {
+  enable = true;
+  extraPortals = with pkgs; [
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-hyprland
+  ];
+};
+  # List services that you want to enable:
+services.blueman.enable = true;
+system.autoUpgrade = {
+  enable = true;
+  dates = "weekly";
+  allowReboot = false;
+};
+nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 30d";
+};
+
+nix.optimise.automatic = true;
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
+  # Copy the NixOS configuration file and link it from the resulting system
+  # (/run/current-system/configuration.nix). This is useful in case you
+  # accidentally delete configuration.nix.
+  # system.copySystemConfiguration = true;
+
+  # This option defines the first version of NixOS you have installed on this particular machine,
+  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
+  #
+  # Most users should NEVER change this value after the initial install, for any reason,
+  # even if you've upgraded your system to a new NixOS release.
+  #
+  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
+  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
+  # to actually do that.
+  #
+  # This value being lower than the current NixOS release does NOT mean your system is
+  # out of date, out of support, or vulnerable.
+  #
+  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
+  # and migrated your data accordingly.
+  #
+  # For more information, see `man configuration.nix` or `nixos-help`.
+  system.stateVersion = "26.05"; # Did you read the comment?
+
+}
