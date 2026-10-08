@@ -128,10 +128,7 @@ programs.hyprland = {
   xwayland.enable = true;
 };
 security.pam.services.hyprlock = {};
-programs.hyprland = {
-	enable = true;
-	xwayland.enable = true;
-};
+
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
