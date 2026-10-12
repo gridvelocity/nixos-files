@@ -14,17 +14,17 @@ in
 
   programs.git.enable = true;
 
-  programs.bash = {
-    enable = true;
-    initExtra = ''
-      PS1='\u@\h:\w\$ '
-    '';
-  };
+programs.bash = {
+  enable = true;
+
+  initExtra = ''
+    source ${./config/.bashrc}
+  '';
+};
 
   home.file.".config/hypr".source = ./config/hypr;
   home.file.".config/waybar".source = ./config/waybar;
   home.file.".config/kitty/".source = ./config/kitty;
-  home.file."./".source = ./config/.bashrc;
 
 gtk = {
   enable = true;
