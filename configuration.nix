@@ -200,7 +200,7 @@ environment.sessionVariables = {
    wget
    fastfetch
    gnome-builder
-   discord
+   vesktop
    thunar
    gvfs
    glib
