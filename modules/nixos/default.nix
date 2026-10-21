@@ -8,5 +8,7 @@
     ./hyprland.nix
     ./security.nix
     ./packages.nix
+    ./users.nix
+    ./system.nix
   ];
 }

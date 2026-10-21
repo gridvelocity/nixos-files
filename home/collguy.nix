@@ -2,18 +2,6 @@
 
 {
   imports = [
-    ../modules/home-manager
+    ./default.nix
   ];
-
-  home.username = "collguy";
-  home.homeDirectory = "/home/collguy";
-  home.stateVersion = "25.05";
-
-  gtk = {
-    enable = true;
-
-    iconTheme = {
-      name = "Win2-7";
-    };
-  };
 }
