@@ -1,10 +1,12 @@
 {
-  description = "Hyprland on Nixos";
+  description = "Hyprland on NixOS";
 
   inputs = {
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    spicetify-nix.url =
+      "github:Gerg-L/spicetify-nix";
 
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url =
+      "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -12,47 +14,56 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix, ... }: {
-    nixosConfigurations.larptop = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    spicetify-nix,
+    ...
+  }: {
+    nixosConfigurations.larptop =
+      nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
 
-      modules = [
-        {
-          nixpkgs.overlays = [
-            (final: prev: {
-              libfprint-2-tod1-vfs0090 =
-                prev.libfprint-2-tod1-vfs0090.overrideAttrs (old: {
-                  patches = (old.patches or []) ++ [
-                    ./patches/vfs0090-libfprint-1.94.patch
-                  ];
+        modules = [
+          {
+            nixpkgs.overlays = [
+              (final: prev: {
+                libfprint-2-tod1-vfs0090 =
+                  prev.libfprint-2-tod1-vfs0090.overrideAttrs
+                    (old: {
+                      patches = (old.patches or []) ++ [
+                        ./patches/vfs0090-libfprint-1.94.patch
+                      ];
 
-                  meta = old.meta // {
-                    broken = false;
-                  };
-                });
-            })
-          ];
-        }
+                      meta = old.meta // {
+                        broken = false;
+                      };
+                    });
+              })
+            ];
+          }
 
-        ./configuration.nix
+          ./hosts/larptop
 
-        home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager
 
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
 
-            extraSpecialArgs = {
-              inherit spicetify-nix;
+              extraSpecialArgs = {
+                inherit spicetify-nix;
+              };
+
+              users.collguy =
+                import ./home/collguy.nix;
+
+              backupFileExtension = "backup";
             };
-
-            users.collguy = import ./home.nix;
-
-            backupFileExtension = "backup";
-          };
-        }
-      ];
-    };
+          }
+        ];
+      };
   };
 }
