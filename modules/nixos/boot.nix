@@ -23,4 +23,12 @@
       '';
     };
   };
+  boot.plymouth = {
+    enable = true;
+    theme = "minimal-dark";
+
+    themePackages = [
+      (pkgs.callPackage ../../extras/plymouth/default.nix {})
+    ];
+  };
 }

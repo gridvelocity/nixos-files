@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Minimal Dark
+Description=Custom minimal dark boot theme
+ModuleName=script
+
+[script]
+ImageDir=/run/plymouth/themes/minimal-dark
+ScriptFile=/run/plymouth/themes/minimal-dark/minimal-dark.script
