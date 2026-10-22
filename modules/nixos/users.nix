@@ -1,5 +1,6 @@
 
 { pkgs, ... }:
+users.mutableUsers = true;
 
 {
   users.users.collguy = {
