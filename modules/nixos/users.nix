@@ -3,6 +3,8 @@
 
 {
   users.mutableUsers = true;
+  users.extraGroups.vboxusers.members = [ "collguy" ];
+
 
   users.users.collguy = {
     isNormalUser = true;
