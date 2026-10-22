@@ -1,8 +1,9 @@
 
 { pkgs, ... }:
-users.mutableUsers = true;
 
 {
+  users.mutableUsers = true;
+
   users.users.collguy = {
     isNormalUser = true;
     home = "/home/collguy";
@@ -11,6 +12,7 @@ users.mutableUsers = true;
       tree
     ];
   };
+
   users.users.maria = {
     isNormalUser = true;
     home = "/home/maria";
