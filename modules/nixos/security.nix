@@ -58,11 +58,16 @@
     gamemode
   ];
 
+
   services.fprintd = {
     enable = true;
-    tod.enable = true;
-    tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-vfs0090;
+    };
   };
+}
+
 
   security.pam.services.sudo.fprintAuth = true;
 }
