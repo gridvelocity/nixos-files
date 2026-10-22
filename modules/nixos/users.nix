@@ -9,7 +9,7 @@
   users.users.collguy = {
     isNormalUser = true;
     home = "/home/collguy";
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
     packages = with pkgs; [
       tree
     ];
