@@ -66,7 +66,6 @@
       driver = pkgs.libfprint-2-tod1-vfs0090;
     };
   };
-};
 
 
   security.pam.services.sudo.fprintAuth = true;
