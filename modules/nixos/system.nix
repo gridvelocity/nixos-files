@@ -22,5 +22,8 @@
   automatic = true;
     dates = [ "Sun *-*-* 23:00:00" ];
   };
+
   system.stateVersion = "26.05";
+
+  virtualisation.docker.enable = true;
 }
