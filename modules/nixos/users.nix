@@ -1,7 +1,7 @@
 
 { pkgs, ... }:
 
-
+{
   users.users.collguy = {
     isNormalUser = true;
     home = "/home/collguy";
@@ -18,3 +18,4 @@
       tree
     ];
   };
+  }
