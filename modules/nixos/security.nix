@@ -70,47 +70,32 @@
     })
   ];
 
-  services.fprintd = {
-    enable = true;
-    package = pkgs.fprintd-tod;
-    tod = {
-      enable = true;
-      driver = pkgs.libfprint-2-tod1-vfs0090;
-    };
-  };
+let
+  # Pull the dedicated Validity standalone service tools directly into the module
+  open-fprintd = pkgs.callPackage "${pkgs.path}/pkgs/development/tools/biometric/open-fprintd" {};
+  python-validity = pkgs.callPackage "${pkgs.path}/pkgs/development/tools/biometric/python-validity" {};
+in
+{
+  # Disable the standard brittle fprintd service entirely
+  services.fprintd.enable = false;
 
-  systemd.services.fprintd.environment = {
-    FP_TOD_DRIVERS_DIR = "${pkgs.libfprint-2-tod1-vfs0090}/lib/libfprint-2/tod-1";
-    G_MESSAGES_DEBUG = "all";
-  };
+  # Install the robust standalone tools directly into the system environment
+  environment.systemPackages = [
+    open-fprintd
+    pkgs.fprintd # Provides the user space client tools like fprintd-enroll
+    python-validity
+  ];
 
+  # Enable the dedicated background service daemons directly
+  systemd.packages = [ open-fprintd python-validity ];
+  systemd.services.open-fprintd.enable = true;
+  systemd.services.python3-validity.enable = true;
+
+  # Grant hardware access permissions to your user group
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="138a", ATTR{idProduct}=="0090", MODE="0666", GROUP="wheel"
   '';
 
-  systemd.services.vfs7500-init = {
-    description = "Validity VFS7500 Fingerprint Sensor Initialization";
-    wantedBy = [ "multi-user.target" "post-resume.target" ];
-    after = [ "udev.target" ];
-    before = [ "fprintd.service" ];
-    
-    # Create an explicit Python environment containing the pyusb package
-    script = let
-      pythonEnv = pkgs.python3.withPackages (ps: [ ps.pyusb ]);
-    in ''
-      ${pythonEnv}/bin/python3 -c "
-import struct, usb.core
-dev = usb.core.find(idVendor=0x138a, idProduct=0x0090)
-if dev is not None:
-    dev.reset()
-    if dev.is_kernel_driver_active(0): dev.detach_kernel_driver(0)
-    dev.set_configuration()
-    dev.write(1, struct.pack('<BBBB', 0x01, 0x00, 0x00, 0x00))
-    print('Hardware Line Re-provisioned Automatically.')
-"
-    '';
-  };
-
-
+  # Allow the fingerprint daemon to handle sudo prompts
   security.pam.services.sudo.fprintAuth = true;
 }
