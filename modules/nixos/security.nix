@@ -52,4 +52,26 @@ if dev is not None:
 "
     '';
   };
+  
+    nixpkgs.overlays = [
+    (final: prev: {
+      libfprint-2-tod1-vfs0090 = (prev.libfprint-2-tod1-vfs0090.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          ../../patches/vfs0090-libfprint-1.94.patch
+        ];
+        meta = old.meta // { broken = false; };
+      })).overrideAttrs (finalAttrs: previousAttrs: {
+        # CRITICAL REPAIR: Strip the obsolete 3rd argument from the driver's function calls
+        postPatch = (previousAttrs.postPatch or "") + ''
+          substituteInPlace vfs0090.c \
+            --replace-warn "fpi_ssm_next_state_delayed (ssm, 200, NULL);" "fpi_ssm_next_state_delayed (ssm, 200);" \
+            --replace-warn "fpi_ssm_next_state_delayed (ssm, 100, NULL);" "fpi_ssm_next_state_delayed (ssm, 100);"
+        '';
+
+        passthru = (previousAttrs.passthru or {}) // {
+          driverPath = "/lib/libfprint-2/tod-1";
+        };
+      });
+    })
+  ];
 }
