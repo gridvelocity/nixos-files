@@ -13,14 +13,8 @@
   ];
 
 
-  services.fprintd = {
-    enable = true;
-    tod = {
-      enable = true;
-      driver = pkgs.open-fprintd; 
-    };
-  };
-
+  services.open-fprintd.enable = true;
+  
   security.pam.services.login.fprintAuth = true;
   security.pam.services.sudo.fprintAuth = true;
 }
