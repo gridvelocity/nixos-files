@@ -67,6 +67,9 @@
     };
   };
 
-
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="138a", ATTR{idProduct}=="0090", MODE="0666", GROUP="wheel"
+  '';
+  
   security.pam.services.sudo.fprintAuth = true;
 }
