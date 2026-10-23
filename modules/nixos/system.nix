@@ -1,10 +1,15 @@
 { ... }:
 
 {
-  nix.settings.experimental-features = [
+nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
+
+  nixpkgs.config.problems.handlers = {
+    libfprint-2-tod1-vfs0090.broken = "ignore";
+  };
+
 
   system.autoUpgrade = {
     enable = true;
