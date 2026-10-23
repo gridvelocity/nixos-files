@@ -13,19 +13,14 @@
   ];
 
 
-  services.fprintd.enable = false;
-
-
-  environment.systemPackages = [
-    pkgs.open-fprintd
-    pkgs.fprintd
-    pkgs.python-validity
-  ];
-
-
-  systemd.packages = [ pkgs.open-fprintd pkgs.python-validity ];
-  systemd.services.open-fprintd.enable = true;
-  systemd.services.python3-validity.enable = true;
+  services.fprintd = {
+    enable = true;
+    package = pkgs.fprintd-tod;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-vfs0090;
+    };
+  };
 
 
   services.udev.extraRules = ''
@@ -34,4 +29,27 @@
 
 
   security.pam.services.sudo.fprintAuth = true;
+
+
+  systemd.services.vfs7500-init = {
+    description = "Validity VFS7500 Fingerprint Sensor Initialization";
+    wantedBy = [ "multi-user.target" "post-resume.target" ];
+    after = [ "udev.target" ];
+    before = [ "fprintd.service" ];
+    
+    script = let
+      pythonEnv = pkgs.python3.withPackages (ps: [ ps.pyusb ]);
+    in ''
+      ${pythonEnv}/bin/python3 -c "
+import struct, usb.core
+dev = usb.core.find(idVendor=0x138a, idProduct=0x0090)
+if dev is not None:
+    dev.reset()
+    if dev.is_kernel_driver_active(0): dev.detach_kernel_driver(0)
+    dev.set_configuration()
+    dev.write(1, struct.pack('<BBBB', 0x01, 0x00, 0x00, 0x00))
+    print('Hardware Line Re-provisioned Automatically.')
+"
+    '';
+  };
 }
