@@ -48,15 +48,13 @@ if dev is not None:
     if dev.is_kernel_driver_active(0): dev.detach_kernel_driver(0)
     dev.set_configuration()
     
-    # 1. FORCIBLY PURGE STORED WINDOWS COLD AUTHPAD LOCKS
-    dev.write(1, struct.pack('<BBBB', 0x01, 0x12, 0x00, 0x00))
-    
-    # 2. RUN STANDARD WAKEUP REGISTERS
+    # Send the correct hardware wake-up sequence
     dev.write(1, struct.pack('<BBBB', 0x01, 0x00, 0x00, 0x00))
-    print('NVRAM Cryptographic Clean Complete. Hardware Line Active.')
+    print('Hardware Line Re-provisioned Automatically.')
 "
     '';
   };
+
 
   
     nixpkgs.overlays = [
