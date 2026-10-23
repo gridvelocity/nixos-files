@@ -17,17 +17,7 @@
     enable = true;
     tod = {
       enable = true;
-      driver = pkgs.python3Packages.python-validity;
-    };
-  };
-
-  # 2. Enable the hardware initialization service
-  systemd.services.python-validity = {
-    description = "Validity Fingerprint Sensor Service";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.python3Packages.python-validity}/bin/python-validity";
-      Restart = "on-failure";
+      driver = pkgs.open-fprintd; 
     };
   };
 
