@@ -10,7 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # 1. Add the community NixOS hardware support repo
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
@@ -18,14 +17,13 @@
     nixosConfigurations.larptop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       
-      # Expose 'inputs' to all your NixOS system submodules (like security.nix)
       specialArgs = { inherit inputs; }; 
       
       modules = [
-        # Your host-specific entry point
         ./hosts/larptop
         
-        # Home Manager configuration layer
+        nixos-hardware.nixosModules.common-pc-laptop-lenovo-thinkpad-open-fprintd
+        
         home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -40,3 +38,4 @@
     };
   };
 }
+

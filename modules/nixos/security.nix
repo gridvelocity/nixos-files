@@ -13,15 +13,8 @@
   ];
 
 
-  services.fprintd = {
-    enable = true;
-    tod = {
-      enable = true;
-      driver = pkgs.libfprint-2-tod1-vfs0090; 
-    };
-  };
+  services.open-fprintd.enable = true;
 
-  # 2. Set up your global system PAM authorization boundaries
   security.pam.services.login.fprintAuth = true;
   security.pam.services.sudo.fprintAuth = true;
 }
