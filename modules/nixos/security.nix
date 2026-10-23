@@ -79,7 +79,10 @@
     };
   };
 
-  systemd.services.fprintd.environment.FP_TOD_DRIVERS_DIR = "${pkgs.libfprint-2-tod1-vfs0090}/lib/libfprint-2/tod-1";
+  systemd.services.fprintd.environment = {
+    FP_TOD_DRIVERS_DIR = "${pkgs.libfprint-2-tod1-vfs0090}/lib/libfprint-2/tod-1";
+    G_MESSAGES_DEBUG = "all";
+  };
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="138a", ATTR{idProduct}=="0090", MODE="0666", GROUP="wheel"
