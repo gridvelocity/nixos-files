@@ -1,12 +1,6 @@
 { pkgs, ... }:
 
-let
-
-  open-fprintd = pkgs.callPackage "${pkgs.path}/pkgs/development/tools/biometric/open-fprintd" {};
-  python-validity = pkgs.callPackage "${pkgs.path}/pkgs/development/tools/biometric/python-validity" {};
-in
 {
-
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
@@ -23,13 +17,13 @@ in
 
 
   environment.systemPackages = [
-    open-fprintd
-    pkgs.fprintd 
-    python-validity
+    pkgs.open-fprintd
+    pkgs.fprintd
+    pkgs.python-validity
   ];
 
 
-  systemd.packages = [ open-fprintd python-validity ];
+  systemd.packages = [ pkgs.open-fprintd pkgs.python-validity ];
   systemd.services.open-fprintd.enable = true;
   systemd.services.python3-validity.enable = true;
 
@@ -40,5 +34,4 @@ in
 
 
   security.pam.services.sudo.fprintAuth = true;
-
 }
