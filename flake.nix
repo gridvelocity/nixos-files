@@ -26,7 +26,7 @@
         ./hosts/larptop
         
         # Pull in the baseline X1 Carbon Gen 4 optimizations
-        nixos-hardware.nixosModules.lenovo-thinkpad-x1-4th-gen
+        nixos-hardware.nixosModules.lenovo-thinkpad-x1-carbon-4th-gen
         
         # Home Manager configuration layer
         home-manager.nixosModules.home-manager
