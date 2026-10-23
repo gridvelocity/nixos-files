@@ -59,14 +59,27 @@
   ];
 
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      libfprint-2-tod1-vfs0090 = prev.libfprint-2-tod1-vfs0090.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          ../../patches/vfs0090-libfprint-1.94.patch
+        ];
+        meta = old.meta // { broken = false; };
+      });
+    })
+  ];
+
   services.fprintd = {
     enable = true;
-    package = pkgs.fprintd-tod; 
+    package = pkgs.fprintd-tod;
     tod = {
       enable = true;
-      driver = pkgs.libfprint-2-tod1-vfs0090; 
+      driver = pkgs.libfprint-2-tod1-vfs0090;
     };
   };
+
+  systemd.services.fprintd.environment.FP_TOD_DRIVERS_DIR = "${pkgs.libfprint-2-tod1-vfs0090}/lib/libfprint-2/tod-1";
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="138a", ATTR{idProduct}=="0090", MODE="0666", GROUP="wheel"
