@@ -61,10 +61,10 @@
 
   services.fprintd = {
     enable = true;
-    package = pkgs.fprintd.override {
-      libfprint = pkgs.libfprint.overrideAttrs (oldAttrs: {
-        propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or []) ++ [ pkgs.libfprint-2-tod1-vfs0090 ];
-      });
+    package = pkgs.fprintd-tod; 
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-vfs0090; 
     };
   };
 
