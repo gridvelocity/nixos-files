@@ -85,14 +85,17 @@
     SUBSYSTEM=="usb", ATTR{idVendor}=="138a", ATTR{idProduct}=="0090", MODE="0666", GROUP="wheel"
   '';
 
- systemd.services.vfs7500-init = {
+  systemd.services.vfs7500-init = {
     description = "Validity VFS7500 Fingerprint Sensor Initialization";
     wantedBy = [ "multi-user.target" "post-resume.target" ];
     after = [ "udev.target" ];
     before = [ "fprintd.service" ];
-    path = [ pkgs.python3 pkgs.python3Packages.pyusb ];
-    script = ''
-      python3 -c "
+    
+    # Create an explicit Python environment containing the pyusb package
+    script = let
+      pythonEnv = pkgs.python3.withPackages (ps: [ ps.pyusb ]);
+    in ''
+      ${pythonEnv}/bin/python3 -c "
 import struct, usb.core
 dev = usb.core.find(idVendor=0x138a, idProduct=0x0090)
 if dev is not None:
@@ -104,6 +107,7 @@ if dev is not None:
 "
     '';
   };
+
 
   security.pam.services.sudo.fprintAuth = true;
 }
